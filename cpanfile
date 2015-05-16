@@ -10,6 +10,7 @@ requires 'Plack::Middleware::ReverseProxy', '0.09';
 requires 'Router::Boom', '0.06';
 requires 'Starlet', '0.20';
 requires 'Teng', '0.18';
+requires 'Teng::Plugin::BulkInsert';
 requires 'Test::WWW::Mechanize::PSGI';
 requires 'Text::Xslate', '2.0009';
 requires 'Time::Piece', '1.20';

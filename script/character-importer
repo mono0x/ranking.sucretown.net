@@ -1,0 +1,19 @@
+#!perl
+use strict;
+use warnings;
+use utf8;
+
+use SanrioCharacterRanking;
+use Amon2::Declare;
+
+use JSON;
+
+SanrioCharacterRanking->bootstrap;
+
+binmode STDIN, ':utf8';
+
+my $items = JSON->new->decode(<STDIN>);
+my @characters = map {
+    +{ id => $_->[1], name => $_->[0], }
+} @$items;
+SanrioCharacterRanking::context->db->bulk_insert('characters', \@characters);
