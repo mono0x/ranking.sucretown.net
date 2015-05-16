@@ -1,4 +1,6 @@
 Makefile
+/config/*.pl
+!/config/example.pl
 /inc/
 MANIFEST
 *.bak
