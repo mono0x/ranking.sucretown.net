@@ -10,7 +10,7 @@ base_row_class 'SanrioCharacterRanking::DB::Row';
 table {
     name 'statuses';
     pk 'id';
-    columns qw(time source);
+    columns qw(created_at source);
 };
 
 table {
