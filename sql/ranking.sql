@@ -1,0 +1,1 @@
+select characters.name as character_name, count(statuses.id) as votes from statuses join votes on votes.status_id = statuses.id join characters on characters.id = votes.character_id group by characters.name order by votes desc;
