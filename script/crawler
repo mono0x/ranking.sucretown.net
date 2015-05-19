@@ -1,0 +1,39 @@
+#!ruby
+require 'bundler'
+Bundler.require
+
+require 'json'
+require 'time'
+
+# http://qiita.com/riocampos/items/6999a52460dd7df941ea
+module Twitter
+  class SearchResults
+    def next_page
+      return nil unless next_page?
+      hash = query_string_to_hash(@attrs[:search_metadata][:next_results])
+      since_id = @attrs[:search_metadata][:since_id]
+      hash[:since_id] = since_id unless since_id.zero?
+      hash
+    end
+  end
+end
+
+twitter = Twitter::REST::Client.new do |config|
+  config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
+  config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
+  config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
+  config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+end
+
+DB = Sequel.connect(ENV['DATABASE_URL'])
+
+latest_status = DB[:statuses].order(:id).last
+since_id = latest_status && latest_status[:id]
+
+search_result = twitter.search( '#VoteSanrio -rt', result_type: 'recent', since_id: since_id)
+search_result.each do |status|
+  DB[:statuses].insert id: status.id, created_at: status.created_at, source: status.to_h.to_json
+  next unless status.text =~ /サンリオキャラクター大賞で(.+?)に投票したよ/
+  character = DB[:characters].where(name: $1).first or next
+  DB[:votes].insert status_id: status.id, character_id: character[:id]
+end
