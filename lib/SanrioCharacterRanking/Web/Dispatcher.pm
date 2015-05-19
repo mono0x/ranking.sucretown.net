@@ -7,7 +7,6 @@ use Amon2::Web::Dispatcher::RouterBoom;
 get '/' => sub {
     my ($c) = @_;
     return $c->render('index.tx', {
-        counter => $counter,
     });
 };
 
