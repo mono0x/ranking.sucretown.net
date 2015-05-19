@@ -9,7 +9,7 @@ install:
   - carton install
 
 script:
-  - carton exec -- probe -lrv t
+  - carton exec -- prove -lrv t
 
 notifications:
   email:
