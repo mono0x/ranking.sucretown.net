@@ -2,6 +2,7 @@ requires 'Amon2', '6.11';
 requires 'Crypt::CBC';
 requires 'Crypt::Rijndael';
 requires 'DBD::Pg';
+requires 'DBIx::Tracer';
 requires 'HTML::FillInForm::Lite', '1.11';
 requires 'HTTP::Session2', '1.03';
 requires 'JSON', '2.50';

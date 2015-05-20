@@ -413,6 +413,16 @@ DISTRIBUTIONS
       Module::Build 0.38
       Module::Load 0
       perl 5.008001
+  DBIx-Tracer-0.02
+    pathname: T/TO/TOKUHIROM/DBIx-Tracer-0.02.tar.gz
+    provides:
+      DBIx::Tracer 0.02
+    requirements:
+      DBI 0
+      Module::Build 0.38
+      Test::More 0.98
+      Test::Requires 0
+      parent 0
   DBIx-TransactionManager-1.13
     pathname: N/NE/NEKOKAK/DBIx-TransactionManager-1.13.tar.gz
     provides:

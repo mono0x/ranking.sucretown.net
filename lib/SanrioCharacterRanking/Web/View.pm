@@ -15,6 +15,16 @@ sub make_instance {
     Carp::croak("Usage: SanrioCharacterRanking::Web::View->make_instance(\$context_class)") if @_!=2;
 
     my $view_conf = +{};
+    if ($ENV{PLACK_ENV} eq 'development') {
+        $view_conf->{warn_handler} = sub {
+            warn @_;
+            Text::Xslate->print(
+                Text::Xslate::mark_raw('<span style="color: red; font-size: 1.8em;">'),
+                '[[', @_, ']]', 
+                Text::Xslate::mark_raw('</span>')
+            );
+        };
+    }
     unless (exists $view_conf->{path}) {
         my $tmpl_path = File::Spec->catdir($context->base_dir(), 'tmpl');
         if ( -d $tmpl_path ) {

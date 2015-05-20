@@ -29,6 +29,27 @@ use SanrioCharacterRanking::Web::View;
     }
 }
 
+sub render {
+    my ($c, $tmpl, $vars) = @_;
+    if ($ENV{PLACK_ENV} eq 'development') {
+        require DBIx::Tracer;
+        my $tracer = DBIx::Tracer->new(
+            sub {
+                return unless Text::Xslate->current_engine;
+                my %args = @_;
+                my $sql = $args{sql};
+                warn "Do not execute query in a view: $sql";
+                Text::Xslate->print(
+                    Text::Xslate::mark_raw('<span style="color: red; font-size: 1.8em;">'),
+                   "[[ Do not execute query in a view: $sql ]]",
+                   Text::Xslate::mark_raw('</span>')
+                );
+            }
+        );
+    }
+    $c->SUPER::render($tmpl, $vars);
+}
+
 # for your security
 __PACKAGE__->add_trigger(
     AFTER_DISPATCH => sub {
