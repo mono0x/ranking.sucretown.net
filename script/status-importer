@@ -1,0 +1,49 @@
+#!perl
+use strict;
+use warnings;
+use utf8;
+
+use SanrioCharacterRanking;
+use SanrioCharacterRanking::M::Status;
+
+use JSON;
+use Time::Piece;
+
+SanrioCharacterRanking->bootstrap;
+
+binmode STDIN, ':utf8';
+
+my $c = SanrioCharacterRanking::context;
+
+my @statuses;
+my @votes;
+
+my %character_to_id = map { ($_->name, $_->id) } $c->db->search('characters');
+
+$c->db->txn_begin;
+while (my $source = <STDIN>) {
+    my $status = JSON->new->decode($source);
+    my $created_at = Time::Piece->strptime($status->{created_at}, '%a %b %d %T %z %Y');
+    #push @statuses, +{
+    SanrioCharacterRanking::M::Status->register(+{
+        id => $status->{id},
+        created_at => $created_at->strftime('%Y-%m-%d %T'),
+        source => $source,
+    });
+    #};
+    if ($status->{text} =~ /サンリオキャラクター大賞で(.+?)に投票したよ/) {
+        my $character_id = $character_to_id{$1};
+        if (defined($character_id)) {
+            #push @votes, +{
+            $c->db->insert('votes', +{
+                character_id => $character_id,
+                status_id => $status->{id},
+            });
+            #};
+        }
+    }
+}
+#$c->db->txn_begin;
+#$c->db->bulk_insert('statuses', \@statuses);
+#$c->db->bulk_insert('votes', \@votes);
+$c->db->txn_commit;

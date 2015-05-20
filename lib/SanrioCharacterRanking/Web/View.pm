@@ -14,7 +14,7 @@ sub make_instance {
     my ($class, $context) = @_;
     Carp::croak("Usage: SanrioCharacterRanking::Web::View->make_instance(\$context_class)") if @_!=2;
 
-    my $view_conf = $context->config->{'Text::Xslate'} || +{};
+    my $view_conf = +{};
     unless (exists $view_conf->{path}) {
         my $tmpl_path = File::Spec->catdir($context->base_dir(), 'tmpl');
         if ( -d $tmpl_path ) {

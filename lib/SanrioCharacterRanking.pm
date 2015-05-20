@@ -16,15 +16,18 @@ my $schema = SanrioCharacterRanking::DB::Schema->instance;
 sub db {
     my $c = shift;
     if (!exists $c->{db}) {
-        my $conf = $c->config->{DBI}
-            or die "Missing configuration about DBI";
+        ENV{'DATABASE_URL'} =~ m{\Apostgres(?:ql)?://(\S+?)(?::(\S+))?@(\S+?):(\d+)/(\S+?)\z} or die;
+        my ($user, $password, $host, $port, $database) = ($1, $2, $3, $4, $5);
         $c->{db} = SanrioCharacterRanking::DB->new(
             schema       => $schema,
-            connect_info => [@$conf],
-            # I suggest to enable following lines if you are using mysql.
-            # on_connect_do => [
-            #     'SET SESSION sql_mode=STRICT_TRANS_TABLES;',
-            # ],
+            connect_info => [
+                "dbi:Pg:dbname=$database;host=$host;port=$port", $user, $password,
+                +{
+                    AutoCommit => 1,
+                    RaiseError => 1,
+                    PrintError => 0,
+                },
+            ],
         );
     }
     $c->{db};
