@@ -8,8 +8,17 @@ before_install:
 install:
   - carton install
 
+before_script:
+  - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
+
 script:
   - carton exec -- prove -lrv t
+
+addons:
+  postgresql: "9.3"
+
+env:
+  - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
 
 notifications:
   email:
