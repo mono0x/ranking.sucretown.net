@@ -9,14 +9,14 @@ use SanrioCharacterRanking::DB;
 
 use parent qw/Amon2/;
 # Enable project local mode.
-__PACKAGE__->make_local_context();
+#__PACKAGE__->make_local_context();
 
 my $schema = SanrioCharacterRanking::DB::Schema->instance;
 
 sub db {
     my $c = shift;
     if (!exists $c->{db}) {
-        ENV{'DATABASE_URL'} =~ m{\Apostgres(?:ql)?://(\S+?)(?::(\S+))?@(\S+?):(\d+)/(\S+?)\z} or die;
+        $ENV{DATABASE_URL} =~ m{\Apostgres(?:ql)?://(\S+?)(?::(\S+))?@(\S+?):(\d+)/(\S+?)\z} or die;
         my ($user, $password, $host, $port, $database) = ($1, $2, $3, $4, $5);
         $c->{db} = SanrioCharacterRanking::DB->new(
             schema       => $schema,

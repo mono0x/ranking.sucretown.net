@@ -6,6 +6,15 @@
 
 <hr />
 
+<table>
+    : for $ranking -> $item {
+    <tr>
+        <td><:= $item.character_name :></td>
+        <td><:= $item.votes :></td>
+    </tr>
+    : }
+</table>
+
 <style>
     .marketing .row {
         margin-top: 20px;
