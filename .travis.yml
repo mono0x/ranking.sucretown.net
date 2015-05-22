@@ -19,7 +19,7 @@ addons:
   postgresql: "9.3"
 
 env:
-  - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
+  - DATABASE_URL=postgres://postgres@localhost:5432/travis_ci_test
 
 notifications:
   email:
