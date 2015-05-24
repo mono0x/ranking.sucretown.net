@@ -1,6 +1,33 @@
 body {
 }
 
+table.ranking {
+    width: 100%;
+    }
+    table.ranking td {
+        padding: 0 0.25em;
+    }
+    table.ranking td.ranking-rank {
+        text-align: center;
+        width: 3em;
+    }
+    table.ranking td.ranking-name {
+        text-align: left;
+    }
+    table.ranking td.ranking-votes {
+        text-align: right;
+        width: 6em;
+    }
+    table.ranking td.ranking-bar {
+        width: 25%;
+        max-width: 20%;
+        }
+        table.ranking td.ranking-bar div.ranking-bar-foreground {
+            height: 1em;
+            background: #88f;
+            display: block;
+        }
+
 footer {
     text-align: right;
     padding-right: 10px;
