@@ -5,3 +5,7 @@ gem 'dotenv'
 gem 'pg'
 gem 'sequel'
 gem 'twitter'
+
+group :schedule do
+  gem 'rufus-scheduler'
+end

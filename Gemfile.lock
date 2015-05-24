@@ -16,6 +16,7 @@ GEM
     multipart-post (2.0.0)
     naught (1.0.0)
     pg (0.17.1)
+    rufus-scheduler (3.1.1)
     sequel (4.22.0)
     simple_oauth (0.3.1)
     thread_safe (0.3.5)
@@ -37,5 +38,6 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   pg
+  rufus-scheduler
   sequel
   twitter
