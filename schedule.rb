@@ -29,7 +29,7 @@ scheduler = Rufus::Scheduler.new
 mutex = Mutex.new
 
 scheduler.cron '0 * * * *', mutex: mutex do
-  execute_command 'bundle exec ruby scripts/crawler'
+  execute_command 'bundle exec ruby script/crawler'
 end
 
 scheduler.join
