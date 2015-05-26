@@ -16,7 +16,7 @@ table.ranking {
     }
     table.ranking td.ranking-votes {
         text-align: right;
-        width: 6em;
+        width: 2.5em;
     }
     table.ranking td.ranking-bar {
         width: 25%;
