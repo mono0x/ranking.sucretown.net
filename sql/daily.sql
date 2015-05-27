@@ -1,0 +1,1 @@
+select to_char(statuses.created_at, 'YYYY-MM-DD') as date, count(votes.status_id) as count from votes join statuses on votes.status_id = statuses.id where votes.character_id = 21 group by date order by date asc;
