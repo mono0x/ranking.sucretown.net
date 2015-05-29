@@ -1,0 +1,47 @@
+: cascade "include/layout.tx"
+
+: override content -> {
+
+<h1>Sanrio Character Ranking Viewer</h1>
+
+<h2><:= $character.name :></h2>
+
+<h3>Transition of the number of votes</h3>
+<div class="ct-chart"></div>
+<script>
+    new Chartist.Line('.ct-chart', {
+        labels: [
+            : for $votes -> $item {
+                : if $~item.index == 0 {
+                    '<:= $item.date :>'
+                : } else {
+                    ,'<:= $item.date :>'
+                : }
+            : }
+        ],
+        series: [
+            [
+                : for $votes -> $item {
+                    : if $~item.index == 0 {
+                        <:= $item.votes :>
+                    : } else {
+                        ,<:= $item.votes :>
+                    : }
+                : }
+            ],
+        ]
+    }, {
+        fullWidth: true,
+        height: '400px'
+    });
+</script>
+
+<table class="table table-striped">
+    : for $votes -> $item {
+    <tr>
+        <td><:= $item.date :></td>
+        <td><:= $item.votes :></td>
+    </tr>
+    : }
+</table>
+: }

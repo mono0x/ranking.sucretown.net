@@ -11,7 +11,7 @@
 <table class="ranking">
     : for $ranking -> $item {
     <tr>
-        <td class="ranking-rank"><:= $~item.index + 1 :></td>
+        <td class="ranking-rank"><:= $ranks[$~item.index] :></td>
         <td class="ranking-name"><:= $item.character_name :></td>
         <td class="ranking-votes"><:= $item.votes :></td>
         <td class="ranking-bar"><div class="ranking-bar-foreground" style="width: <:= $item.votes * 100 / $ranking[0].votes :>%"></div></td>
