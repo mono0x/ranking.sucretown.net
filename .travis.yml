@@ -1,29 +1,21 @@
 language: perl
 perl:
-  - "5.20"
-
+- '5.20'
 before_install:
-  - cpanm Carton
-
+- cpanm Carton
 install:
-  - carton install
-
+- carton install
 before_script:
-  - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
-  - psql -U postgres travis_ci_test < sql/schema.sql
-
+- psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
+- psql -U postgres travis_ci_test < sql/schema.sql
 script:
-  - carton exec -- prove -lrv t
-
+- carton exec -- prove -lrv t
 addons:
-  postgresql: "9.3"
-
+  postgresql: '9.3'
 env:
-  - DATABASE_URL=postgres://postgres@localhost:5432/travis_ci_test
-
+- DATABASE_URL=postgres://postgres@localhost:5432/travis_ci_test
 notifications:
-  email:
-    recipients:
-      - mono@monoweb.info
+  slack:
+    secure: qAXVCO7Gb+0NVyldUVEovCGYHsB0flJAir1QS21g1Nv/vv5eLDZz+He8BjUVAZuSGCEKFjnLR1PcYw/sabwgNpk4qCoOgcjACEjR3ekILaRgGyKdIZ9nMttJrirI8Ooj4PzPK5N0yzsUeGtiCviDq4acDXebWppZ8tN0w9ih7OzSX6gcacXt3N1ZHEGGyrxr9mqP3spScKHnrO+PGJmHiDR7WFwN8OMBABKH6e666Y9rhXLA9jBHfwCPvEcGGds4Zx2eMr/bIaHzZt8225Rm3nPYRzmuAe4wfF0z/PZoaP1rOaz47elDDpjy/ctKZ576NXJf/E0LnFieOCHh5LoZFO4GF8Ry0zsuJyB269cfy+5pQ0DW/tG2v4Woizxa17W/GSmlMQeT1qzpuW1fMIywL9mnigZ0F9Vqed/zGeCAmKrxs6U6bknMvPVMTbwc2/ZZuygyfhTygdL2s9olpV/Tg80tCnUt12k8TlyKJWrL/bIAh5OtZkTaji3222ClYEz9W6Gw9fFImGWjz9q11heSoGaQlJsHNABHOqpKb+er/DgN15Fkr7HW2im6yCAafVCBABfJK605Dwej+HHpLUxbLqgIZ6Z/5gFRerCQxlxQYOXfmThdDZ+zHS1v7pCADbhW9QaDUgPbSmFsN+PjSFfgod5OvKmDGXwcvo1BK08I8RY=
     on_success: change
     on_failure: always
